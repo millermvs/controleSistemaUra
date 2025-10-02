@@ -1,9 +1,15 @@
 package br.com.lognetbr.dtos;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public record ListarLigacoesResponseDto(Integer protocolo, String telefone, String context, LocalDateTime dataGeracao
-
-) {
+@Getter
+@Setter
+public class ListarLigacoesResponseDto {
+	
+	private String protocolo;
+	private String telefone;
+	private String context;
+	private String dataGeracao;
 
 }

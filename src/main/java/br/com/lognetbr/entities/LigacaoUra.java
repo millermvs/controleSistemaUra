@@ -1,6 +1,6 @@
 package br.com.lognetbr.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,24 +22,22 @@ import lombok.Setter;
 @Entity
 @Table(name = "ligacoes_ura")
 public class LigacaoUra {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column
 	private Long id;
-	
-	@Column (unique = true)
-	private Integer protocolo;
-	
+
+	@Column(unique = true)
+	private String protocolo;
+
 	@Column
 	private String telefone;
-	
+
 	@Column
 	private String context;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime dataGeracao;
-	
+
+	@Temporal(TemporalType.DATE)
+	private LocalDate dataGeracao;
 
 }

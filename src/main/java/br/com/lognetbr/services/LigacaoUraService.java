@@ -1,20 +1,16 @@
 package br.com.lognetbr.services;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.lognetbr.dtos.CriarLigacaoUraRequestDto;
 import br.com.lognetbr.dtos.CriarLigacaoUraResponseDto;
-import br.com.lognetbr.dtos.ListarLigacoesResponseDto;
 import br.com.lognetbr.entities.LigacaoUra;
 import br.com.lognetbr.repositories.LigacaoUraRepository;
 
 @Service
-public class LigacaoUraSercice {
+public class LigacaoUraService {
 
 	@Autowired
 	private LigacaoUraRepository ligacaoUraRepository;
@@ -34,18 +30,11 @@ public class LigacaoUraSercice {
 		return response;
 	}
 
-	public Page<ListarLigacoesResponseDto> listarLigacoesUra(LocalDate dataInicio, LocalDate dataFim, int page) {
+	public ResponseEntity<?> listarLigacoesUra() {
 
-		var pageable = PageRequest.of(page, 25);
-		var lista = ligacaoUraRepository.findByDate(dataInicio, dataFim, pageable);
-		var response = lista.map(m -> new ListarLigacoesResponseDto(
-				m.getProtocolo(),
-				m.getTelefone(),
-				m.getContext(),
-				m.getDataGeracao()				
-				));
+		var lista = ligacaoUraRepository.findAll();
 
-		return response;
+		return ResponseEntity.ok().body(lista);
 
 	}
 
