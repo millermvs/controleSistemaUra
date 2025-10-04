@@ -24,7 +24,7 @@ public class FilterConfiguration {
 
 		// Configurando os endpoints que serão verificados pelo Filter
 		// Inserir /api/*
-		registration.addUrlPatterns("");
+		registration.addUrlPatterns("/api/*");
 		
 		// Adicionando exceções (esses endpoints passam direto pelo filter)
 		registration.addInitParameter("excludeUrl", "/api/v1/usuario/criar");
