@@ -1,9 +1,8 @@
 package br.com.lognetbr.repositories;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,10 +14,8 @@ import br.com.lognetbr.entities.LigacaoUra;
 public interface LigacaoUraRepository extends JpaRepository<LigacaoUra, Long> {
 	@Query("""
 			SELECT lu FROM LigacaoUra lu
-			WHERE lu.dataGeracao BETWEEN :pdataInicio AND :pdataFim
-			ORDER BY lu.dataGeracao ASC
+			WHERE lu.datageracao BETWEEN :pdataInicio AND :pdataFim
+			ORDER BY lu.datageracao ASC
 			""")
-	Page <LigacaoUra> findByDate(@Param("pdataInicio") LocalDate dataInicio,
-								 @Param("pdataFim") LocalDate dataFim,
-								 Pageable pageable);
+	List<LigacaoUra> findByDate(@Param("pdataInicio") LocalDate dataInicio, @Param("pdataFim") LocalDate dataFim);
 }

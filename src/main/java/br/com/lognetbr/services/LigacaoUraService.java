@@ -1,12 +1,17 @@
 package br.com.lognetbr.services;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.lognetbr.dtos.CriarLigacaoUraRequestDto;
 import br.com.lognetbr.dtos.CriarLigacaoUraResponseDto;
+import br.com.lognetbr.dtos.ListarLigacoesResponseDto;
 import br.com.lognetbr.entities.LigacaoUra;
+import br.com.lognetbr.exceptions.SemDadosNaConsultaException;
 import br.com.lognetbr.repositories.LigacaoUraRepository;
 
 @Service
@@ -21,7 +26,7 @@ public class LigacaoUraService {
 		ligacaoUra.setProtocolo(request.getProtocolo());
 		ligacaoUra.setTelefone(request.getTelefone());
 		ligacaoUra.setContext(request.getContext());
-		ligacaoUra.setDataGeracao(request.getDataGeracao());
+		ligacaoUra.setDatageracao(request.getDataGeracao());
 		ligacaoUraRepository.save(ligacaoUra);
 
 		var response = new CriarLigacaoUraResponseDto();
@@ -30,12 +35,24 @@ public class LigacaoUraService {
 		return response;
 	}
 
-	public ResponseEntity<?> listarLigacoesUra() {
+	public ResponseEntity<List<ListarLigacoesResponseDto>> listarLigacoesUra(String dataInicio, String dataFim) {
 
-		var lista = ligacaoUraRepository.findAll();
+		var  consultaLista = ligacaoUraRepository.findByDate(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
+			if (consultaLista == null)
+				throw new SemDadosNaConsultaException();
 
-		return ResponseEntity.ok().body(lista);
+		var listaResponse = consultaLista.stream().map(l -> {
+			var dto = new ListarLigacoesResponseDto();
+			dto.setId(l.getId());
+			dto.setProtocolo(l.getProtocolo());
+			dto.setTelefone(l.getTelefone());
+			dto.setContext(l.getContext());
+			dto.setDataGeracao(l.getDatageracao());
+			return dto;
+		}).toList();
+		
 
+		return ResponseEntity.ok().body(listaResponse);
 	}
 
 }

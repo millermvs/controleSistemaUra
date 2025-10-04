@@ -37,7 +37,8 @@ public class LigacaoUra {
 	@Column
 	private String context;
 
+	@Column
 	@Temporal(TemporalType.DATE)
-	private LocalDate dataGeracao;
+	private LocalDate datageracao;
 
 }

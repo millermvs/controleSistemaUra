@@ -25,9 +25,9 @@ public class LigacaoUraController {
 		return ResponseEntity.ok(response);
 	}
 
-	@GetMapping("listar/{dataInicio}")
-	public ResponseEntity<?> get(@PathVariable String dataInicio) {
-		var response = ligacaoUraService.listarLigacoesUra();
-		return ResponseEntity.ok().body(response);
+	@GetMapping("listar/{dataInicio}/{dataFim}")
+	public ResponseEntity<?> get(@PathVariable String dataInicio, @PathVariable String dataFim) {
+		var response = ligacaoUraService.listarLigacoesUra(dataInicio, dataFim);
+		return response;
 	}
 }

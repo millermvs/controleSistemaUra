@@ -23,8 +23,9 @@ public class FilterConfiguration {
 		registration.setFilter(new JwtAuthFilter(chaveToken));
 
 		// Configurando os endpoints que serão verificados pelo Filter
-		registration.addUrlPatterns("/api/*");
-
+		// Inserir /api/*
+		registration.addUrlPatterns("");
+		
 		// Adicionando exceções (esses endpoints passam direto pelo filter)
 		registration.addInitParameter("excludeUrl", "/api/v1/usuario/criar");
 		registration.addInitParameter("excludeUrl", "/api/v1/usuario/autenticar");
